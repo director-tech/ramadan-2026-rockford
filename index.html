@@ -543,6 +543,43 @@
     .cal-cell.maghrib-cell .cal-cell-label { color: var(--pastel-blue-text); }
     .cal-cell.maghrib-cell .cal-cell-time { color: var(--pastel-blue-text); font-weight: 700; }
 
+    .cal-card-iqama {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px 8px;
+      font-variant-numeric: tabular-nums;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px solid var(--gray-200);
+    }
+
+    .today-card .cal-card-iqama { border-top-color: var(--pastel-yellow-border); }
+
+    .cal-card-iqama .cal-cell .cal-cell-label {
+      font-size: 0.55rem;
+      color: var(--gray-500);
+    }
+
+    .cal-card-iqama .cal-cell .cal-cell-time {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--gray-700);
+    }
+
+    .cal-card-jumuah {
+      margin-top: 6px;
+      padding: 6px 10px;
+      background: var(--pastel-yellow);
+      border: 1px solid var(--pastel-yellow-border);
+      border-radius: 6px;
+      font-size: 0.72rem;
+      display: flex;
+      justify-content: space-between;
+      color: #6B5800;
+    }
+
+    .cal-card-jumuah strong { font-weight: 600; }
+
     /* ---- EID CARD ---- */
     .eid-card {
       background: var(--pastel-yellow);
@@ -861,12 +898,18 @@
       var isEid = !isRamadan(d);
       var cardClass = 'cal-card' + (isToday ? ' today-card' : '');
 
+      var iq = getIqama(d.dk, d.fajr, d.maghrib);
+      var isFri = d.dow === 'Fri';
+
       html += '<div class="' + cardClass + '" data-index="' + i + '">';
+
+      // Header: date first, then Ramadan day
       html += '<div class="cal-card-header">';
-      html += '<span class="cal-card-day">' + (isEid ? 'Eid al-Fitr' : 'Ramadan ' + d.rd) + '</span>';
-      html += '<span class="cal-card-date">' + d.dow + ', ' + d.dt + (d.tc ? ' *' : '') + '</span>';
+      html += '<span class="cal-card-day">' + d.dow + ', ' + d.dt + (d.tc ? ' *' : '') + '</span>';
+      html += '<span class="cal-card-date">' + (isEid ? 'Eid al-Fitr' : 'Ramadan ' + d.rd) + '</span>';
       html += '</div>';
 
+      // Adhan times
       html += '<div class="cal-card-grid">';
       html += '<div class="cal-cell fajr-cell"><span class="cal-cell-label">Fajr</span><span class="cal-cell-time">' + d.fajr + '</span></div>';
       html += '<div class="cal-cell"><span class="cal-cell-label">Sunrise</span><span class="cal-cell-time">' + d.sunrise + '</span></div>';
@@ -875,6 +918,20 @@
       html += '<div class="cal-cell maghrib-cell"><span class="cal-cell-label">Maghrib</span><span class="cal-cell-time">' + d.maghrib + '</span></div>';
       html += '<div class="cal-cell"><span class="cal-cell-label">Isha</span><span class="cal-cell-time">' + d.isha + '</span></div>';
       html += '</div>';
+
+      // Iqama times
+      html += '<div class="cal-card-iqama">';
+      html += '<div class="cal-cell"><span class="cal-cell-label">Fajr Iq.</span><span class="cal-cell-time">' + iq.fajrIq + '</span></div>';
+      html += '<div class="cal-cell"><span class="cal-cell-label">Zuhr Iq.</span><span class="cal-cell-time">' + iq.zuhrIq + '</span></div>';
+      html += '<div class="cal-cell"><span class="cal-cell-label">Asr Iq.</span><span class="cal-cell-time">' + iq.asrIq + '</span></div>';
+      html += '<div class="cal-cell"><span class="cal-cell-label">Mghb Iq.</span><span class="cal-cell-time">' + iq.maghribIq + '</span></div>';
+      html += '<div class="cal-cell"><span class="cal-cell-label">' + (isRamadan(d) ? 'Tarawih' : 'Isha Iq.') + '</span><span class="cal-cell-time">' + iq.ishaIq + '</span></div>';
+      html += '</div>';
+
+      // Jumu'ah times
+      if (isFri && isRamadan(d)) {
+        html += '<div class="cal-card-jumuah"><span><strong>Jumu\'ah:</strong> 1st Khutba 1:05 PM</span><span>2nd Khutba 2:05 PM</span></div>';
+      }
 
       html += '</div>';
     }
