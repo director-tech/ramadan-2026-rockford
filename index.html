@@ -8,6 +8,71 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* ---- LOCAL FONTS ---- */
+    @font-face {
+      font-family: 'Matter';
+      src: url('fonts/MatterLight.otf') format('opentype');
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Matter';
+      src: url('fonts/MatterRegular.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Matter';
+      src: url('fonts/MatterMedium.otf') format('opentype');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Matter';
+      src: url('fonts/MatterSemiBold.otf') format('opentype');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Matter';
+      src: url('fonts/MatterBold.otf') format('opentype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Signifier';
+      src: url('fonts/Signifier-Regular.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Signifier';
+      src: url('fonts/Signifier-RegularItalic.otf') format('opentype');
+      font-weight: 400;
+      font-style: italic;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Signifier';
+      src: url('fonts/Signifier-Medium.otf') format('opentype');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Signifier';
+      src: url('fonts/Signifier-Bold.otf') format('opentype');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
@@ -191,54 +256,6 @@
     .summary-card .card-line .time-value {
       font-weight: 700;
       font-size: 1.05rem;
-    }
-
-    /* ---- COUNTDOWN ---- */
-    .countdown-banner {
-      background: transparent;
-      color: var(--black);
-      border: 1px solid var(--gray-300);
-      border-radius: 12px;
-      padding: 16px 20px;
-      margin-top: 10px;
-      margin-bottom: 10px;
-      text-align: center;
-    }
-
-    .countdown-label {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--gray-600);
-      margin-bottom: 10px;
-    }
-
-    .countdown-highlight {
-      background: var(--pastel-yellow);
-      border-radius: 8px;
-      padding: 10px 14px;
-      margin-bottom: 10px;
-      display: inline-block;
-    }
-
-    .countdown-highlight .countdown-text {
-      font-family: 'Matter', 'Inter', sans-serif;
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--black);
-      line-height: 1.5;
-    }
-
-    .countdown-tarawih {
-      font-size: 0.88rem;
-      color: var(--gray-700);
-      margin-top: 2px;
-    }
-
-    .countdown-tarawih .tarawih-time {
-      font-weight: 600;
-      color: var(--black);
     }
 
     .fajr-card {
@@ -648,11 +665,6 @@
 
   /* ======== PRAYER DATA ======== */
   const days = [
-    { dow:'Wed', rd:'1',  dt:'18-Feb', dk:'2026-02-18', fajr:'5:30 AM', sunrise:'6:47 AM', duha:'7:02 AM', zuhr:'12:10 PM', asr:'3:06 PM', maghrib:'5:33 PM', isha:'6:51 PM', tc:false },
-    { dow:'Thu', rd:'2',  dt:'19-Feb', dk:'2026-02-19', fajr:'5:28 AM', sunrise:'6:46 AM', duha:'7:01 AM', zuhr:'12:10 PM', asr:'3:07 PM', maghrib:'5:35 PM', isha:'6:52 PM', tc:false },
-    { dow:'Fri', rd:'3',  dt:'20-Feb', dk:'2026-02-20', fajr:'5:27 AM', sunrise:'6:44 AM', duha:'6:59 AM', zuhr:'12:10 PM', asr:'3:08 PM', maghrib:'5:36 PM', isha:'6:54 PM', tc:false },
-    { dow:'Sat', rd:'4',  dt:'21-Feb', dk:'2026-02-21', fajr:'5:25 AM', sunrise:'6:43 AM', duha:'6:58 AM', zuhr:'12:10 PM', asr:'3:09 PM', maghrib:'5:37 PM', isha:'6:55 PM', tc:false },
-    { dow:'Sun', rd:'5',  dt:'22-Feb', dk:'2026-02-22', fajr:'5:24 AM', sunrise:'6:41 AM', duha:'6:56 AM', zuhr:'12:10 PM', asr:'3:10 PM', maghrib:'5:38 PM', isha:'6:56 PM', tc:false },
     { dow:'Mon', rd:'6',  dt:'23-Feb', dk:'2026-02-23', fajr:'5:23 AM', sunrise:'6:40 AM', duha:'6:55 AM', zuhr:'12:10 PM', asr:'3:11 PM', maghrib:'5:40 PM', isha:'6:57 PM', tc:false },
     { dow:'Tue', rd:'7',  dt:'24-Feb', dk:'2026-02-24', fajr:'5:21 AM', sunrise:'6:38 AM', duha:'6:53 AM', zuhr:'12:10 PM', asr:'3:12 PM', maghrib:'5:41 PM', isha:'6:58 PM', tc:false },
     { dow:'Wed', rd:'8',  dt:'25-Feb', dk:'2026-02-25', fajr:'5:20 AM', sunrise:'6:37 AM', duha:'6:52 AM', zuhr:'12:09 PM', asr:'3:13 PM', maghrib:'5:42 PM', isha:'6:59 PM', tc:false },
@@ -696,16 +708,6 @@
     var h12 = h24 % 12;
     if (h12 === 0) h12 = 12;
     return h12 + ':' + String(mn).padStart(2, '0') + ' ' + np;
-  }
-
-  function parseTimeToDate(timeStr, dateKey) {
-    var m = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
-    if (!m) return null;
-    var h = parseInt(m[1]), mn = parseInt(m[2]), p = m[3].toUpperCase();
-    if (p === 'PM' && h !== 12) h += 12;
-    if (p === 'AM' && h === 12) h = 0;
-    var parts = dateKey.split('-');
-    return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]), h, mn, 0, 0);
   }
 
   function ordinal(n) {
@@ -802,10 +804,6 @@
       html += '<div class="tarawih-line">Tarawih is at <span class="time-value">' + iq.ishaIq + '</span></div>';
       html += '</div>';
 
-      // Countdown placeholder (only rendered for today, updated live) — below all cards
-      if (isToday) {
-        html += '<div class="countdown-banner" id="fast-countdown" style="display:none;"></div>';
-      }
     }
 
     // Time change notice — show advance warning from Mar 5 through Mar 8
@@ -875,8 +873,6 @@
     // Bind calendar button
     document.getElementById('show-calendar-btn').addEventListener('click', showCalendar);
 
-    // Restart countdown after re-render
-    if (typeof startCountdown === 'function') startCountdown();
   }
 
   /* ======== RENDER CALENDAR ======== */
@@ -989,55 +985,8 @@
     }
   });
 
-  /* ======== COUNTDOWN ======== */
-  var countdownInterval = null;
-
-  function updateCountdown() {
-    var el = document.getElementById('fast-countdown');
-    if (!el) return;
-
-    var day = days[currentIndex];
-    if (!isRamadan(day) || day.dk !== todayKey) {
-      el.style.display = 'none';
-      return;
-    }
-
-    var now = new Date();
-    var fajrDate = parseTimeToDate(day.fajr, day.dk);
-    var maghribDate = parseTimeToDate(day.maghrib, day.dk);
-
-    if (now >= fajrDate && now < maghribDate) {
-      var diff = maghribDate - now;
-      var totalMin = Math.floor(diff / 60000);
-      var hours = Math.floor(totalMin / 60);
-      var minutes = totalMin % 60;
-
-      var timeText = 'You have ';
-      if (hours > 0) {
-        timeText += hours + ' hour' + (hours !== 1 ? 's' : '') + ' and ' + minutes + ' minute' + (minutes !== 1 ? 's' : '');
-      } else {
-        timeText += minutes + ' minute' + (minutes !== 1 ? 's' : '');
-      }
-      timeText += ' until iftar.';
-
-      el.style.display = '';
-      el.innerHTML =
-        '<div class="countdown-label">Time Remaining in Fast</div>' +
-        '<div class="countdown-highlight"><span class="countdown-text">' + timeText + '</span></div>';
-    } else {
-      el.style.display = 'none';
-    }
-  }
-
-  function startCountdown() {
-    if (countdownInterval) clearInterval(countdownInterval);
-    updateCountdown();
-    countdownInterval = setInterval(updateCountdown, 60000);
-  }
-
   /* ======== INIT ======== */
   renderDaily();
-  startCountdown();
 
 })();
 </script>
