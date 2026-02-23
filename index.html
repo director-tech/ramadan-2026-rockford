@@ -819,8 +819,10 @@
 
     html += '<div class="prayer-row"><span class="prayer-name">Zuhr</span><span class="prayer-time">' + day.zuhr + '</span></div>';
     if (isFri && isRamadan(day)) {
-      html += '<div class="prayer-row iqama-row"><span class="prayer-name">1st Khutba</span><span class="prayer-time">1:05 PM</span></div>';
-      html += '<div class="prayer-row iqama-row"><span class="prayer-name">2nd Khutba</span><span class="prayer-time">2:05 PM</span></div>';
+      html += '<div class="prayer-row iqama-row"><span class="prayer-name">1st Khutba (Arabic)</span><span class="prayer-time">1:05 PM</span></div>';
+      html += '<div class="prayer-row iqama-row"><span class="prayer-name">Iqama</span><span class="prayer-time">1:20 PM</span></div>';
+      html += '<div class="prayer-row iqama-row"><span class="prayer-name">2nd Khutba (English)</span><span class="prayer-time">2:05 PM</span></div>';
+      html += '<div class="prayer-row iqama-row"><span class="prayer-name">Iqama</span><span class="prayer-time">2:30 PM</span></div>';
     } else {
       html += '<div class="prayer-row iqama-row"><span class="prayer-name">Iqama</span><span class="prayer-time">' + iq.zuhrIq + '</span></div>';
     }
@@ -882,7 +884,7 @@
       html += '<div class="cal-cell fajr-cell"><span class="cal-cell-label">Fajr</span><span class="cal-cell-time">' + d.fajr + '</span><span class="iq-pill">Iq. ' + iq.fajrIq + '</span></div>';
       html += '<div class="cal-cell"><span class="cal-cell-label">Sunrise</span><span class="cal-cell-time">' + d.sunrise + '</span></div>';
       if (isFri && isRamadan(d)) {
-        html += '<div class="cal-cell"><span class="cal-cell-label">Zuhr</span><span class="cal-cell-time">' + d.zuhr + '</span><div class="iq-pill-row"><span class="iq-pill">1st 1:05</span><span class="iq-pill">2nd 2:05</span></div></div>';
+        html += '<div class="cal-cell"><span class="cal-cell-label">Zuhr / Jumu\'ah</span><span class="cal-cell-time">' + d.zuhr + '</span><div class="iq-pill-row"><span class="iq-pill">1st 1:05</span><span class="iq-pill">Iq. 1:20</span></div><div class="iq-pill-row"><span class="iq-pill">2nd 2:05</span><span class="iq-pill">Iq. 2:30</span></div></div>';
       } else {
         html += '<div class="cal-cell"><span class="cal-cell-label">Zuhr</span><span class="cal-cell-time">' + d.zuhr + '</span><span class="iq-pill">Iq. ' + iq.zuhrIq + '</span></div>';
       }
