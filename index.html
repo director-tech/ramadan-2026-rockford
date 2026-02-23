@@ -546,6 +546,12 @@
     .cal-cell.maghrib-cell .cal-cell-label { color: var(--pastel-blue-text); }
     .cal-cell.maghrib-cell .cal-cell-time { color: var(--pastel-blue-text); font-weight: 700; }
 
+    .iq-pill-row {
+      display: flex;
+      gap: 4px;
+      justify-content: center;
+    }
+
     .iq-pill {
       display: inline-block;
       margin-top: 3px;
@@ -934,7 +940,7 @@
       html += '<div class="cal-cell"><span class="cal-cell-label">Zuhr</span><span class="cal-cell-time">' + d.zuhr + '</span><span class="iq-pill">Iq. ' + iq.zuhrIq + '</span></div>';
       html += '<div class="cal-cell"><span class="cal-cell-label">Asr</span><span class="cal-cell-time">' + d.asr + '</span><span class="iq-pill">Iq. ' + iq.asrIq + '</span></div>';
       html += '<div class="cal-cell maghrib-cell"><span class="cal-cell-label">Maghrib</span><span class="cal-cell-time">' + d.maghrib + '</span><span class="iq-pill">Iq. ' + iq.maghribIq + '</span></div>';
-      html += '<div class="cal-cell"><span class="cal-cell-label">Isha</span><span class="cal-cell-time">' + d.isha + '</span><span class="iq-pill">Iq. ' + iq.ishaIq + '</span>' + (isRamadan(d) ? '<span class="iq-pill">Tarawih ' + iq.tarawihIq + '</span>' : '') + '</div>';
+      html += '<div class="cal-cell"><span class="cal-cell-label">Isha</span><span class="cal-cell-time">' + d.isha + '</span><div class="iq-pill-row"><span class="iq-pill">Iq. ' + iq.ishaIq + '</span>' + (isRamadan(d) ? '<span class="iq-pill">Tarawih ' + iq.tarawihIq + '</span>' : '') + '</div></div>';
       html += '</div>';
 
       // Jumu'ah times
