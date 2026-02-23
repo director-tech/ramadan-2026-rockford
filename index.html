@@ -141,7 +141,6 @@
     }
 
     .ramadan-title {
-      border-top: 1px solid rgba(255,255,255,0.15);
       padding-top: 14px;
     }
 
@@ -149,6 +148,11 @@
       font-size: 1.35rem;
       font-weight: 600;
       margin-bottom: 2px;
+      display: inline-block;
+      background: var(--pastel-yellow);
+      color: var(--black);
+      padding: 4px 14px;
+      border-radius: 6px;
     }
 
     .ramadan-title p {
@@ -482,69 +486,82 @@
 
     .back-btn:hover { background: var(--deep-blue); color: var(--white); }
 
-    .table-wrapper {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      border: 1px solid var(--gray-200);
-      border-radius: 12px;
+    .cal-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
       margin-bottom: 16px;
     }
 
-    .table-wrapper::-webkit-scrollbar { height: 4px; }
-    .table-wrapper::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 2px; }
-
-    .cal-table {
-      width: 100%;
-      min-width: 680px;
-      border-collapse: collapse;
-      font-size: 0.78rem;
+    .cal-card {
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: background 0.2s ease;
     }
 
-    .cal-table thead { background: var(--deep-blue); color: var(--white); }
+    .cal-card:hover { background: var(--gray-50); }
 
-    .cal-table th {
-      padding: 10px 8px;
+    .cal-card.today-card {
+      background: var(--pastel-yellow);
+      border-color: var(--pastel-yellow-border);
+    }
+
+    .cal-card.today-card:hover { background: #FFF59D; }
+
+    .cal-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+
+    .cal-card-day {
+      font-family: 'Signifier', 'Playfair Display', serif;
       font-weight: 600;
-      text-align: center;
-      font-size: 0.72rem;
-      letter-spacing: 0.04em;
-      white-space: nowrap;
+      font-size: 0.95rem;
+      color: var(--deep-blue);
     }
 
-    .cal-table td {
-      padding: 8px 6px;
-      text-align: center;
-      border-bottom: 1px solid var(--gray-100);
-      white-space: nowrap;
+    .cal-card-date {
+      font-size: 0.8rem;
+      color: var(--gray-600);
+    }
+
+    .cal-card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px 10px;
+      font-size: 0.78rem;
       font-variant-numeric: tabular-nums;
     }
 
-    .cal-table tbody tr { transition: background 0.2s ease; cursor: pointer; }
-    .cal-table tbody tr:hover { background: var(--gray-50); }
+    .cal-card-grid .cal-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-    .cal-table tbody tr.today-row {
-      background: var(--pastel-yellow);
+    .cal-cell-label {
+      font-size: 0.65rem;
       font-weight: 600;
-    }
-
-    .cal-table tbody tr.today-row:hover { background: #FFF59D; }
-
-    .cal-table tbody tr.time-change-row { border-top: 2px solid var(--pastel-yellow-border); }
-
-    .cal-table tbody tr.time-change-row td:nth-child(3) {
-      font-weight: 700;
-      color: #8B6800;
-    }
-
-    .cal-table .fajr-col { color: var(--pastel-red-text); font-weight: 600; }
-    .cal-table .maghrib-col { color: var(--pastel-blue-text); font-weight: 600; }
-
-    .scroll-hint {
-      text-align: center;
-      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
       color: var(--gray-500);
-      margin-bottom: 14px;
+      margin-bottom: 2px;
     }
+
+    .cal-cell-time {
+      font-weight: 500;
+      font-size: 0.82rem;
+      color: var(--black);
+    }
+
+    .cal-cell.fajr-cell .cal-cell-label { color: var(--pastel-red-text); }
+    .cal-cell.fajr-cell .cal-cell-time { color: var(--pastel-red-text); font-weight: 700; }
+    .cal-cell.maghrib-cell .cal-cell-label { color: var(--pastel-blue-text); }
+    .cal-cell.maghrib-cell .cal-cell-time { color: var(--pastel-blue-text); font-weight: 700; }
 
     /* ---- EID CARD ---- */
     .eid-card {
@@ -616,7 +633,7 @@
     </div>
     <div class="ramadan-title">
       <h2>Ramadan 2026/1447</h2>
-      <p>Prayer Timetable &mdash; February / March 2026</p>
+      <p>Prayer Timetable, February / March 2026</p>
       <p class="community-line">For the Rockford Muslim community.</p>
       <p class="community-line">Prayer times based on MAGR Masjid.</p>
     </div>
@@ -643,10 +660,7 @@
         <h3>Full Calendar</h3>
         <button class="back-btn" id="back-to-daily">Back to Daily</button>
       </div>
-      <p class="scroll-hint" id="scroll-hint">Scroll horizontally to see all times</p>
-      <div class="table-wrapper">
-        <table class="cal-table" id="cal-table"></table>
-      </div>
+      <div class="cal-cards" id="cal-cards"></div>
       <div class="time-change-notice" style="margin-top:12px;">
         <strong>Spring Ahead</strong> &mdash; Clocks move forward one hour. Adjust clocks before bed on Saturday, March 7, 2026. Sunday, March 8 prayer times shift accordingly.
       </div>
@@ -878,38 +892,41 @@
 
   /* ======== RENDER CALENDAR ======== */
   function renderCalendar() {
-    var html = '<thead><tr>';
-    html += '<th>Day</th><th>Ramadan</th><th>Date</th>';
-    html += '<th>Fajr</th><th>Sunrise</th><th>Duha</th>';
-    html += '<th>Zuhr</th><th>Asr</th><th>Maghrib</th><th>Isha</th>';
-    html += '</tr></thead><tbody>';
+    var html = '';
 
     for (var i = 0; i < days.length; i++) {
       var d = days[i];
-      var rowClass = '';
-      if (d.dk === todayKey) rowClass += ' today-row';
-      if (d.tc) rowClass += ' time-change-row';
+      var isToday = d.dk === todayKey;
+      var isEid = !isRamadan(d);
+      var cardClass = 'cal-card' + (isToday ? ' today-card' : '');
 
-      html += '<tr class="' + rowClass.trim() + '" data-index="' + i + '">';
-      html += '<td>' + d.dow + '</td>';
-      html += '<td>' + d.rd + '</td>';
-      html += '<td>' + d.dt + (d.tc ? ' *' : '') + '</td>';
-      html += '<td class="fajr-col">' + d.fajr + '</td>';
-      html += '<td>' + d.sunrise + '</td>';
-      html += '<td>' + d.duha + '</td>';
-      html += '<td>' + d.zuhr + '</td>';
-      html += '<td>' + d.asr + '</td>';
-      html += '<td class="maghrib-col">' + d.maghrib + '</td>';
-      html += '<td>' + d.isha + '</td>';
-      html += '</tr>';
+      html += '<div class="' + cardClass + '" data-index="' + i + '">';
+
+      // Header: Ramadan day + date
+      html += '<div class="cal-card-header">';
+      html += '<span class="cal-card-day">' + (isEid ? 'Eid al-Fitr' : 'Ramadan ' + d.rd) + '</span>';
+      html += '<span class="cal-card-date">' + d.dow + ', ' + d.dt + (d.tc ? ' *' : '') + '</span>';
+      html += '</div>';
+
+      // Prayer times grid (2 rows of 4)
+      html += '<div class="cal-card-grid">';
+      html += '<div class="cal-cell fajr-cell"><span class="cal-cell-label">Fajr</span><span class="cal-cell-time">' + d.fajr + '</span></div>';
+      html += '<div class="cal-cell"><span class="cal-cell-label">Sunrise</span><span class="cal-cell-time">' + d.sunrise + '</span></div>';
+      html += '<div class="cal-cell"><span class="cal-cell-label">Zuhr</span><span class="cal-cell-time">' + d.zuhr + '</span></div>';
+      html += '<div class="cal-cell"><span class="cal-cell-label">Asr</span><span class="cal-cell-time">' + d.asr + '</span></div>';
+      html += '<div class="cal-cell maghrib-cell"><span class="cal-cell-label">Maghrib</span><span class="cal-cell-time">' + d.maghrib + '</span></div>';
+      html += '<div class="cal-cell"><span class="cal-cell-label">Isha</span><span class="cal-cell-time">' + d.isha + '</span></div>';
+      html += '</div>';
+
+      html += '</div>';
     }
-    html += '</tbody>';
-    document.getElementById('cal-table').innerHTML = html;
 
-    // Click row to go to daily view
-    var rows = document.querySelectorAll('#cal-table tbody tr');
-    rows.forEach(function(row) {
-      row.addEventListener('click', function() {
+    document.getElementById('cal-cards').innerHTML = html;
+
+    // Click card to go to daily view
+    var cards = document.querySelectorAll('.cal-card');
+    cards.forEach(function(card) {
+      card.addEventListener('click', function() {
         currentIndex = parseInt(this.getAttribute('data-index'));
         showDaily();
       });
@@ -917,9 +934,9 @@
 
     // Scroll to today
     setTimeout(function() {
-      var todayRow = document.querySelector('.today-row');
-      if (todayRow) {
-        todayRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      var todayCard = document.querySelector('.today-card');
+      if (todayCard) {
+        todayCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     }, 100);
   }
