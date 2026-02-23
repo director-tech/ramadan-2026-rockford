@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAGR Ramadan 2026/1447 Prayer Timetable</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --deep-blue: #2222EB;
+      --deep-blue-light: #3838F0;
+      --pastel-yellow: #FFF9C4;
+      --pastel-yellow-border: #FFE082;
+      --pastel-red: #FFF0F0;
+      --pastel-red-accent: #FFCDD2;
+      --pastel-red-text: #8B2525;
+      --pastel-blue: #EDF6FF;
+      --pastel-blue-accent: #B3D9F7;
+      --pastel-blue-text: #1A4A7A;
+      --black: #1A1A1A;
+      --white: #FFFFFF;
+      --gray-50: #FAFAFA;
+      --gray-100: #F5F5F5;
+      --gray-200: #EEEEEE;
+      --gray-300: #E0E0E0;
+      --gray-500: #9E9E9E;
+      --gray-600: #757575;
+      --gray-700: #555555;
+    }
+
+    body {
+      font-family: 'Matter', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    .title-font, h1, h2, h3 {
+      font-family: 'Signifier', 'Playfair Display', Georgia, 'Times New Roman', serif;
+      font-weight: 600;
+    }
+
+    /* ---- HEADER ---- */
+    header {
+      background: var(--deep-blue);
+      color: var(--white);
+      text-align: center;
+      padding: 20px 20px 22px;
+    }
+
+    .sponsor-badge {
+      display: inline-block;
+      margin: 14px auto 16px;
+      padding: 6px 18px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      font-size: 0.72rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .sponsor-badge strong {
+      font-weight: 600;
+      display: block;
+      font-size: 0.8rem;
+      margin-top: 2px;
+      letter-spacing: 0.04em;
+    }
+
+    .ramadan-title {
+      border-top: 1px solid rgba(255,255,255,0.15);
+      padding-top: 14px;
+    }
+
+    .ramadan-title h2 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .ramadan-title p {
+      font-size: 0.82rem;
+      opacity: 1;
+      color: var(--white);
+    }
+
+    .ramadan-title .community-line {
+      font-size: 0.72rem;
+      opacity: 1;
+      color: var(--white);
+      margin-top: 8px;
+    }
+
+    /* ---- DATE NAV ---- */
+    .date-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: var(--gray-50);
+      border-bottom: 1px solid var(--gray-200);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav-btn {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--gray-300);
+      background: var(--white);
+      border-radius: 50%;
+      font-size: 1.1rem;
+      color: var(--deep-blue);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, border-color 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .nav-btn:hover { background: var(--gray-100); border-color: var(--gray-500); }
+    .nav-btn:active { background: var(--gray-200); }
+
+    .date-display { text-align: center; flex: 1; padding: 0 12px; }
+
+    .date-display .date-text {
+      font-family: 'Matter', 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--black);
+    }
+
+    .date-display .ramadan-day-text {
+      font-family: 'Signifier', 'Playfair Display', serif;
+      font-size: 0.85rem;
+      color: var(--deep-blue);
+      font-weight: 500;
+    }
+
+    /* ---- DAILY VIEW ---- */
+    .daily-content {
+      padding: 20px 16px;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .day-heading {
+      font-family: 'Signifier', 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--deep-blue);
+      text-align: center;
+      margin-bottom: 14px;
+      line-height: 1.4;
+    }
+
+    /* ---- SUMMARY CARDS ---- */
+    .summary-card {
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 10px;
+      transition: opacity 0.3s ease;
+    }
+
+    .summary-card .card-label {
+      font-family: 'Matter', 'Inter', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      opacity: 0.7;
+    }
+
+    .summary-card .card-line {
+      font-family: 'Matter', 'Inter', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .summary-card .card-line .time-value {
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    /* ---- COUNTDOWN ---- */
+    .countdown-banner {
+      background: transparent;
+      color: var(--black);
+      border: 1px solid var(--gray-300);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .countdown-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray-600);
+      margin-bottom: 10px;
+    }
+
+    .countdown-highlight {
+      background: var(--pastel-yellow);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .countdown-highlight .countdown-text {
+      font-family: 'Matter', 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--black);
+      line-height: 1.5;
+    }
+
+    .countdown-tarawih {
+      font-size: 0.88rem;
+      color: var(--gray-700);
+      margin-top: 2px;
+    }
+
+    .countdown-tarawih .tarawih-time {
+      font-weight: 600;
+      color: var(--black);
+    }
+
+    .fajr-card {
+      background: var(--pastel-red);
+      border: 1px solid var(--pastel-red-accent);
+    }
+
+    .fajr-card .card-label { color: var(--pastel-red-text); }
+    .fajr-card .time-value { color: var(--pastel-red-text); }
+
+    .maghrib-card {
+      background: var(--pastel-blue);
+      border: 1px solid var(--pastel-blue-accent);
+    }
+
+    .maghrib-card .card-label { color: var(--pastel-blue-text); }
+    .maghrib-card .time-value { color: var(--pastel-blue-text); }
+
+    .tarawih-line {
+      font-size: 0.95rem;
+      padding-top: 8px;
+      margin-top: 8px;
+      border-top: 1px solid var(--pastel-blue-accent);
+      color: var(--black);
+      font-weight: 400;
+    }
+
+    .tarawih-line .time-value {
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    /* ---- DIVIDER ---- */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0 16px;
+    }
+
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--gray-300);
+    }
+
+    .section-divider span {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-600);
+      white-space: nowrap;
+    }
+
+    /* ---- PRAYER LIST ---- */
+    .prayer-list { margin-bottom: 12px; }
+
+    .prayer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px;
+      border-radius: 10px;
+      transition: background 0.2s ease;
+    }
+
+    .prayer-row.highlighted-red {
+      background: var(--pastel-red);
+      border: 1px solid var(--pastel-red-accent);
+      margin-bottom: 2px;
+    }
+
+    .prayer-row.highlighted-blue {
+      background: var(--pastel-blue);
+      border: 1px solid var(--pastel-blue-accent);
+      margin-bottom: 2px;
+    }
+
+    .prayer-row.iqama-row {
+      padding: 4px 16px 4px 32px;
+      font-size: 0.85rem;
+      color: var(--gray-700);
+    }
+
+    .prayer-row.iqama-row.iqama-red {
+      padding-bottom: 10px;
+      margin-bottom: 4px;
+      background: var(--pastel-red);
+      border: 1px solid var(--pastel-red-accent);
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+    }
+
+    .prayer-row.highlighted-red + .iqama-row.iqama-red {
+      border-radius: 0 0 10px 10px;
+    }
+
+    .prayer-row.highlighted-red {
+      border-radius: 10px 10px 0 0;
+      margin-bottom: 0;
+    }
+
+    .prayer-row.iqama-row.iqama-blue {
+      padding-bottom: 10px;
+      margin-bottom: 4px;
+      background: var(--pastel-blue);
+      border: 1px solid var(--pastel-blue-accent);
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+    }
+
+    .prayer-row.highlighted-blue {
+      border-radius: 10px 10px 0 0;
+      margin-bottom: 0;
+    }
+
+    .prayer-name {
+      font-weight: 500;
+      font-size: 0.92rem;
+    }
+
+    .prayer-time {
+      font-weight: 600;
+      font-size: 0.92rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .iqama-row .prayer-name { font-weight: 400; font-size: 0.82rem; }
+    .iqama-row .prayer-time { font-weight: 500; font-size: 0.82rem; }
+
+    /* Friday khutba */
+    .khutba-section {
+      background: var(--pastel-yellow);
+      border: 1px solid var(--pastel-yellow-border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin: 14px 0;
+    }
+
+    .khutba-section .section-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #8B7000;
+      margin-bottom: 8px;
+    }
+
+    .khutba-section .khutba-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+      font-size: 0.88rem;
+    }
+
+    /* Time change notice */
+    .time-change-notice {
+      background: var(--pastel-yellow);
+      border: 1px solid var(--pastel-yellow-border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      color: #6B5800;
+    }
+
+    .time-change-notice strong { color: #4A3D00; }
+
+    /* ---- TOGGLE BUTTON ---- */
+    .view-toggle {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      margin: 20px 0;
+      background: var(--white);
+      border: 2px solid var(--deep-blue);
+      border-radius: 12px;
+      color: var(--deep-blue);
+      font-family: 'Matter', 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .view-toggle:hover { background: var(--deep-blue); color: var(--white); }
+    .view-toggle:active { opacity: 0.9; }
+
+    /* ---- CALENDAR VIEW ---- */
+    .calendar-content {
+      padding: 16px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .calendar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .calendar-header h3 {
+      font-size: 1.1rem;
+      color: var(--deep-blue);
+    }
+
+    .back-btn {
+      padding: 8px 16px;
+      background: none;
+      border: 1px solid var(--deep-blue);
+      border-radius: 8px;
+      color: var(--deep-blue);
+      font-family: 'Matter', 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .back-btn:hover { background: var(--deep-blue); color: var(--white); }
+
+    .table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+
+    .table-wrapper::-webkit-scrollbar { height: 4px; }
+    .table-wrapper::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 2px; }
+
+    .cal-table {
+      width: 100%;
+      min-width: 680px;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+
+    .cal-table thead { background: var(--deep-blue); color: var(--white); }
+
+    .cal-table th {
+      padding: 10px 8px;
+      font-weight: 600;
+      text-align: center;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .cal-table td {
+      padding: 8px 6px;
+      text-align: center;
+      border-bottom: 1px solid var(--gray-100);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .cal-table tbody tr { transition: background 0.2s ease; cursor: pointer; }
+    .cal-table tbody tr:hover { background: var(--gray-50); }
+
+    .cal-table tbody tr.today-row {
+      background: var(--pastel-yellow);
+      font-weight: 600;
+    }
+
+    .cal-table tbody tr.today-row:hover { background: #FFF59D; }
+
+    .cal-table tbody tr.time-change-row { border-top: 2px solid var(--pastel-yellow-border); }
+
+    .cal-table tbody tr.time-change-row td:nth-child(3) {
+      font-weight: 700;
+      color: #8B6800;
+    }
+
+    .cal-table .fajr-col { color: var(--pastel-red-text); font-weight: 600; }
+    .cal-table .maghrib-col { color: var(--pastel-blue-text); font-weight: 600; }
+
+    .scroll-hint {
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--gray-500);
+      margin-bottom: 14px;
+    }
+
+    /* ---- EID CARD ---- */
+    .eid-card {
+      background: var(--pastel-yellow);
+      border: 1px solid var(--pastel-yellow-border);
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .eid-card h3 {
+      color: #6B5800;
+      font-size: 1.3rem;
+      margin-bottom: 4px;
+    }
+
+    .eid-card p { color: #8B7000; font-size: 0.9rem; }
+
+    /* ---- FOOTER ---- */
+    footer {
+      text-align: center;
+      padding: 20px 16px 32px;
+      border-top: 1px solid var(--gray-200);
+      margin-top: 8px;
+    }
+
+    footer p {
+      font-size: 0.72rem;
+      color: var(--gray-500);
+      line-height: 1.6;
+    }
+
+    /* ---- TRANSITIONS ---- */
+    .fade-in {
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hidden { display: none !important; }
+
+    /* ---- RESPONSIVE ---- */
+    @media (min-width: 520px) {
+      .daily-content { padding: 24px 24px; }
+      .prayer-row { padding: 12px 20px; }
+      .summary-card { padding: 20px 24px; }
+      header { padding: 32px 24px 28px; }
+    }
+
+    @media (min-width: 768px) {
+      .ramadan-title h2 { font-size: 1.5rem; }
+      .day-heading { font-size: 1.4rem; }
+      .cal-table { font-size: 0.84rem; }
+      .cal-table th { font-size: 0.76rem; padding: 12px 10px; }
+      .cal-table td { padding: 10px 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <header>
+    <div class="sponsor-badge">
+      Sponsored by<strong>Tier One Asset Management</strong>
+    </div>
+    <div class="ramadan-title">
+      <h2>Ramadan 2026/1447</h2>
+      <p>Prayer Timetable &mdash; February / March 2026</p>
+      <p class="community-line">For the Rockford Muslim community. Prayer times based on MAGR Masjid.</p>
+    </div>
+  </header>
+
+  <!-- DAILY VIEW -->
+  <div id="daily-view">
+    <div class="date-nav">
+      <button class="nav-btn" id="prev-btn" aria-label="Previous day">&#8249;</button>
+      <div class="date-display">
+        <div class="date-text" id="date-text"></div>
+        <div class="ramadan-day-text" id="ramadan-day-text"></div>
+      </div>
+      <button class="nav-btn" id="next-btn" aria-label="Next day">&#8250;</button>
+    </div>
+
+    <div class="daily-content fade-in" id="daily-content"></div>
+  </div>
+
+  <!-- CALENDAR VIEW -->
+  <div id="calendar-view" class="hidden">
+    <div class="calendar-content">
+      <div class="calendar-header">
+        <h3>Full Calendar</h3>
+        <button class="back-btn" id="back-to-daily">Back to Daily</button>
+      </div>
+      <p class="scroll-hint" id="scroll-hint">Scroll horizontally to see all times</p>
+      <div class="table-wrapper">
+        <table class="cal-table" id="cal-table"></table>
+      </div>
+      <div class="time-change-notice" style="margin-top:12px;">
+        <strong>Spring Ahead</strong> &mdash; Clocks move forward one hour. Adjust clocks before bed on Saturday, March 7, 2026. Sunday, March 8 prayer times shift accordingly.
+      </div>
+      <button class="view-toggle" id="back-to-daily-2">Back to Daily View</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>Ramadan 2026/1447 / February&ndash;March 2026<br>
+    Sponsored by Tier One Asset Management</p>
+  </footer>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  /* ======== PRAYER DATA ======== */
+  const days = [
+    { dow:'Wed', rd:'1',  dt:'18-Feb', dk:'2026-02-18', fajr:'5:30 AM', sunrise:'6:47 AM', duha:'7:02 AM', zuhr:'12:10 PM', asr:'3:06 PM', maghrib:'5:33 PM', isha:'6:51 PM', tc:false },
+    { dow:'Thu', rd:'2',  dt:'19-Feb', dk:'2026-02-19', fajr:'5:28 AM', sunrise:'6:46 AM', duha:'7:01 AM', zuhr:'12:10 PM', asr:'3:07 PM', maghrib:'5:35 PM', isha:'6:52 PM', tc:false },
+    { dow:'Fri', rd:'3',  dt:'20-Feb', dk:'2026-02-20', fajr:'5:27 AM', sunrise:'6:44 AM', duha:'6:59 AM', zuhr:'12:10 PM', asr:'3:08 PM', maghrib:'5:36 PM', isha:'6:54 PM', tc:false },
+    { dow:'Sat', rd:'4',  dt:'21-Feb', dk:'2026-02-21', fajr:'5:25 AM', sunrise:'6:43 AM', duha:'6:58 AM', zuhr:'12:10 PM', asr:'3:09 PM', maghrib:'5:37 PM', isha:'6:55 PM', tc:false },
+    { dow:'Sun', rd:'5',  dt:'22-Feb', dk:'2026-02-22', fajr:'5:24 AM', sunrise:'6:41 AM', duha:'6:56 AM', zuhr:'12:10 PM', asr:'3:10 PM', maghrib:'5:38 PM', isha:'6:56 PM', tc:false },
+    { dow:'Mon', rd:'6',  dt:'23-Feb', dk:'2026-02-23', fajr:'5:23 AM', sunrise:'6:40 AM', duha:'6:55 AM', zuhr:'12:10 PM', asr:'3:11 PM', maghrib:'5:40 PM', isha:'6:57 PM', tc:false },
+    { dow:'Tue', rd:'7',  dt:'24-Feb', dk:'2026-02-24', fajr:'5:21 AM', sunrise:'6:38 AM', duha:'6:53 AM', zuhr:'12:10 PM', asr:'3:12 PM', maghrib:'5:41 PM', isha:'6:58 PM', tc:false },
+    { dow:'Wed', rd:'8',  dt:'25-Feb', dk:'2026-02-25', fajr:'5:20 AM', sunrise:'6:37 AM', duha:'6:52 AM', zuhr:'12:09 PM', asr:'3:13 PM', maghrib:'5:42 PM', isha:'6:59 PM', tc:false },
+    { dow:'Thu', rd:'9',  dt:'26-Feb', dk:'2026-02-26', fajr:'5:18 AM', sunrise:'6:35 AM', duha:'6:50 AM', zuhr:'12:09 PM', asr:'3:14 PM', maghrib:'5:43 PM', isha:'7:01 PM', tc:false },
+    { dow:'Fri', rd:'10', dt:'27-Feb', dk:'2026-02-27', fajr:'5:16 AM', sunrise:'6:33 AM', duha:'6:48 AM', zuhr:'12:09 PM', asr:'3:14 PM', maghrib:'5:44 PM', isha:'7:02 PM', tc:false },
+    { dow:'Sat', rd:'11', dt:'28-Feb', dk:'2026-02-28', fajr:'5:15 AM', sunrise:'6:32 AM', duha:'6:47 AM', zuhr:'12:09 PM', asr:'3:15 PM', maghrib:'5:46 PM', isha:'7:03 PM', tc:false },
+    { dow:'Sun', rd:'12', dt:'1-Mar',  dk:'2026-03-01', fajr:'5:14 AM', sunrise:'6:31 AM', duha:'6:46 AM', zuhr:'12:09 PM', asr:'3:16 PM', maghrib:'5:47 PM', isha:'7:04 PM', tc:false },
+    { dow:'Mon', rd:'13', dt:'2-Mar',  dk:'2026-03-02', fajr:'5:12 AM', sunrise:'6:29 AM', duha:'6:44 AM', zuhr:'12:09 PM', asr:'3:17 PM', maghrib:'5:48 PM', isha:'7:05 PM', tc:false },
+    { dow:'Tue', rd:'14', dt:'3-Mar',  dk:'2026-03-03', fajr:'5:11 AM', sunrise:'6:27 AM', duha:'6:42 AM', zuhr:'12:08 PM', asr:'3:17 PM', maghrib:'5:49 PM', isha:'7:06 PM', tc:false },
+    { dow:'Wed', rd:'15', dt:'4-Mar',  dk:'2026-03-04', fajr:'5:09 AM', sunrise:'6:26 AM', duha:'6:41 AM', zuhr:'12:08 PM', asr:'3:18 PM', maghrib:'5:50 PM', isha:'7:07 PM', tc:false },
+    { dow:'Thu', rd:'16', dt:'5-Mar',  dk:'2026-03-05', fajr:'5:07 AM', sunrise:'6:24 AM', duha:'6:39 AM', zuhr:'12:08 PM', asr:'3:19 PM', maghrib:'5:51 PM', isha:'7:09 PM', tc:false },
+    { dow:'Fri', rd:'17', dt:'6-Mar',  dk:'2026-03-06', fajr:'5:06 AM', sunrise:'6:23 AM', duha:'6:38 AM', zuhr:'12:08 PM', asr:'3:20 PM', maghrib:'5:53 PM', isha:'7:10 PM', tc:false },
+    { dow:'Sat', rd:'18', dt:'7-Mar',  dk:'2026-03-07', fajr:'5:04 AM', sunrise:'6:21 AM', duha:'6:36 AM', zuhr:'12:07 PM', asr:'3:21 PM', maghrib:'5:54 PM', isha:'7:11 PM', tc:false },
+    { dow:'Sun', rd:'19', dt:'8-Mar',  dk:'2026-03-08', fajr:'6:02 AM', sunrise:'7:19 AM', duha:'7:34 AM', zuhr:'1:07 PM',  asr:'4:21 PM', maghrib:'6:55 PM', isha:'8:12 PM', tc:true },
+    { dow:'Mon', rd:'20', dt:'9-Mar',  dk:'2026-03-09', fajr:'6:01 AM', sunrise:'7:17 AM', duha:'7:32 AM', zuhr:'1:07 PM',  asr:'4:22 PM', maghrib:'6:56 PM', isha:'8:13 PM', tc:false },
+    { dow:'Tue', rd:'21', dt:'10-Mar', dk:'2026-03-10', fajr:'5:59 AM', sunrise:'7:16 AM', duha:'7:31 AM', zuhr:'1:07 PM',  asr:'4:23 PM', maghrib:'6:57 PM', isha:'8:15 PM', tc:false },
+    { dow:'Wed', rd:'22', dt:'11-Mar', dk:'2026-03-11', fajr:'5:57 AM', sunrise:'7:14 AM', duha:'7:29 AM', zuhr:'1:06 PM',  asr:'4:23 PM', maghrib:'6:59 PM', isha:'8:16 PM', tc:false },
+    { dow:'Thu', rd:'23', dt:'12-Mar', dk:'2026-03-12', fajr:'5:55 AM', sunrise:'7:12 AM', duha:'7:27 AM', zuhr:'1:06 PM',  asr:'4:24 PM', maghrib:'7:00 PM', isha:'8:17 PM', tc:false },
+    { dow:'Fri', rd:'24', dt:'13-Mar', dk:'2026-03-13', fajr:'5:54 AM', sunrise:'7:11 AM', duha:'7:26 AM', zuhr:'1:06 PM',  asr:'4:25 PM', maghrib:'7:01 PM', isha:'8:18 PM', tc:false },
+    { dow:'Sat', rd:'25', dt:'14-Mar', dk:'2026-03-14', fajr:'5:52 AM', sunrise:'7:09 AM', duha:'7:24 AM', zuhr:'1:06 PM',  asr:'4:25 PM', maghrib:'7:02 PM', isha:'8:19 PM', tc:false },
+    { dow:'Sun', rd:'26', dt:'15-Mar', dk:'2026-03-15', fajr:'5:50 AM', sunrise:'7:07 AM', duha:'7:22 AM', zuhr:'1:05 PM',  asr:'4:26 PM', maghrib:'7:03 PM', isha:'8:21 PM', tc:false },
+    { dow:'Mon', rd:'27', dt:'16-Mar', dk:'2026-03-16', fajr:'5:48 AM', sunrise:'7:06 AM', duha:'7:21 AM', zuhr:'1:05 PM',  asr:'4:27 PM', maghrib:'7:04 PM', isha:'8:22 PM', tc:false },
+    { dow:'Tue', rd:'28', dt:'17-Mar', dk:'2026-03-17', fajr:'5:47 AM', sunrise:'7:04 AM', duha:'7:19 AM', zuhr:'1:05 PM',  asr:'4:27 PM', maghrib:'7:05 PM', isha:'8:23 PM', tc:false },
+    { dow:'Wed', rd:'29', dt:'18-Mar', dk:'2026-03-18', fajr:'5:45 AM', sunrise:'7:02 AM', duha:'7:17 AM', zuhr:'1:05 PM',  asr:'4:28 PM', maghrib:'7:07 PM', isha:'8:24 PM', tc:false },
+    { dow:'Thu', rd:'30', dt:'19-Mar', dk:'2026-03-19', fajr:'5:43 AM', sunrise:'7:00 AM', duha:'7:15 AM', zuhr:'1:04 PM',  asr:'4:29 PM', maghrib:'7:08 PM', isha:'8:26 PM', tc:false },
+    { dow:'Fri', rd:'Shawwal 1', dt:'20-Mar', dk:'2026-03-20', fajr:'5:41 AM', sunrise:'6:59 AM', duha:'7:15 AM', zuhr:'1:04 PM', asr:'4:29 PM', maghrib:'7:09 PM', isha:'8:27 PM', tc:false }
+  ];
+
+  /* ======== UTILITIES ======== */
+  function addMinutes(timeStr, mins) {
+    var m = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
+    if (!m) return timeStr;
+    var h = parseInt(m[1]), mn = parseInt(m[2]), p = m[3].toUpperCase();
+    var h24 = h;
+    if (p === 'PM' && h !== 12) h24 += 12;
+    if (p === 'AM' && h === 12) h24 = 0;
+    var total = h24 * 60 + mn + mins;
+    h24 = Math.floor(total / 60) % 24;
+    mn = total % 60;
+    var np = h24 >= 12 ? 'PM' : 'AM';
+    var h12 = h24 % 12;
+    if (h12 === 0) h12 = 12;
+    return h12 + ':' + String(mn).padStart(2, '0') + ' ' + np;
+  }
+
+  function parseTimeToDate(timeStr, dateKey) {
+    var m = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
+    if (!m) return null;
+    var h = parseInt(m[1]), mn = parseInt(m[2]), p = m[3].toUpperCase();
+    if (p === 'PM' && h !== 12) h += 12;
+    if (p === 'AM' && h === 12) h = 0;
+    var parts = dateKey.split('-');
+    return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]), h, mn, 0, 0);
+  }
+
+  function ordinal(n) {
+    var num = parseInt(n);
+    if (isNaN(num)) return n;
+    var s = ['th','st','nd','rd'];
+    var v = num % 100;
+    return num + (s[(v - 20) % 10] || s[v] || s[0]);
+  }
+
+  function formatDateLong(dk) {
+    var parts = dk.split('-');
+    var d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+    var dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    var monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    return dayNames[d.getDay()] + ', ' + monthNames[d.getMonth()] + ' ' + d.getDate();
+  }
+
+  function getIqama(dk, fajr, maghrib) {
+    var zuhrIq = '1:10 PM';
+
+    // Fajr iqama: always 25 min after Fajr adhan during Ramadan
+    // Shawwal 1 (Mar 20): Eid prayer at 6:00 AM
+    var fajrIq = (dk === '2026-03-20') ? '6:00 AM' : addMinutes(fajr, 25);
+
+    // Maghrib iqama: 20 min after Maghrib until Mar 19,
+    // then 10 min after Maghrib starting Mar 20
+    var maghribIq = (dk >= '2026-03-20') ? addMinutes(maghrib, 10) : addMinutes(maghrib, 20);
+
+    // Asr iqama: 3:30 PM before Feb 28, then 5:15 PM
+    var asrIq = (dk < '2026-02-28') ? '3:30 PM' : '5:15 PM';
+
+    // Isha/Tarawih iqama: 8:00 PM before Mar 8, then 9:00 PM
+    var ishaIq = (dk < '2026-03-08') ? '8:00 PM' : '9:00 PM';
+
+    return { fajrIq:fajrIq, zuhrIq:zuhrIq, asrIq:asrIq, maghribIq:maghribIq, ishaIq:ishaIq };
+  }
+
+  function isRamadan(day) { return day.rd !== 'Shawwal 1'; }
+  function isFriday(day) { return day.dow === 'Fri'; }
+
+  /* ======== STATE ======== */
+  var currentIndex = 0;
+  var todayKey = (function() {
+    var n = new Date();
+    return n.getFullYear() + '-' + String(n.getMonth()+1).padStart(2,'0') + '-' + String(n.getDate()).padStart(2,'0');
+  })();
+
+  // Find today's index
+  for (var i = 0; i < days.length; i++) {
+    if (days[i].dk === todayKey) { currentIndex = i; break; }
+  }
+
+  /* ======== RENDER DAILY VIEW ======== */
+  function renderDaily() {
+    var day = days[currentIndex];
+    var iq = getIqama(day.dk, day.fajr, day.maghrib);
+    var isEid = !isRamadan(day);
+    var isFri = isFriday(day);
+    var isToday = day.dk === todayKey;
+
+    // Date nav
+    document.getElementById('date-text').textContent = formatDateLong(day.dk);
+    document.getElementById('ramadan-day-text').textContent = isEid ? 'Shawwal 1 / Eid al-Fitr' : 'Ramadan ' + day.rd;
+
+    var html = '';
+
+    // Day heading
+    if (isEid) {
+      html += '<div class="eid-card"><h3>Eid Mubarak</h3><p>Shawwal 1 &mdash; Eid al-Fitr</p></div>';
+      html += '<div class="summary-card fajr-card">';
+      html += '<div class="card-label">Eid Prayer</div>';
+      html += '<div class="card-line">Eid prayer at the masjid is at <span class="time-value">' + (iq.fajrIq || '\u2014') + '</span></div>';
+      html += '</div>';
+    } else {
+      if (isToday) {
+        html += '<div class="day-heading">Today is the ' + ordinal(day.rd) + ' day of Ramadan</div>';
+      } else {
+        html += '<div class="day-heading">' + formatDateLong(day.dk) + ' is the ' + ordinal(day.rd) + ' day of Ramadan</div>';
+      }
+
+      // Fajr / Suhoor card
+      html += '<div class="summary-card fajr-card">';
+      html += '<div class="card-label">Suhoor Ends / Fajr Adhan</div>';
+      html += '<div class="card-line">The fast starts at <span class="time-value">' + day.fajr + '</span></div>';
+      html += '<div class="card-line">Fajr at the masjid is at <span class="time-value">' + iq.fajrIq + '</span></div>';
+      html += '</div>';
+
+      // Maghrib / Iftar card
+      html += '<div class="summary-card maghrib-card">';
+      html += '<div class="card-label">Iftar / Maghrib Adhan</div>';
+      html += '<div class="card-line">The fast ends at <span class="time-value">' + day.maghrib + '</span></div>';
+      html += '<div class="card-line">Maghrib at the masjid is at <span class="time-value">' + iq.maghribIq + '</span></div>';
+      html += '<div class="tarawih-line">Tarawih is at <span class="time-value">' + iq.ishaIq + '</span></div>';
+      html += '</div>';
+
+      // Countdown placeholder (only rendered for today, updated live) — below all cards
+      if (isToday) {
+        html += '<div class="countdown-banner" id="fast-countdown" style="display:none;"></div>';
+      }
+    }
+
+    // Time change notice — show advance warning from Mar 5 through Mar 8
+    if (day.dk >= '2026-03-05' && day.dk <= '2026-03-08') {
+      html += '<div class="time-change-notice">';
+      html += '<strong>Spring Ahead &mdash; Time Change</strong><br>';
+      html += 'Clocks move forward ONE hour. Move clocks one hour ahead before going to bed on Saturday, March 7, 2026, so that on <strong>Sunday, March 8</strong> prayer times adjust accordingly.';
+      html += '</div>';
+    }
+
+    // Friday Khutba
+    if (isFri && isRamadan(day)) {
+      html += '<div class="khutba-section">';
+      html += '<div class="section-label">Friday Khutba</div>';
+      html += '<div class="khutba-row"><span>First Khutba</span><span>1:05 PM</span></div>';
+      html += '<div class="khutba-row"><span>Second Khutba</span><span>2:05 PM</span></div>';
+      html += '</div>';
+    }
+
+    // Section divider
+    html += '<div class="section-divider"><span>All Prayer Times</span></div>';
+
+    // Full prayer list
+    html += '<div class="prayer-list">';
+
+    // Fajr (highlighted red)
+    html += '<div class="prayer-row highlighted-red"><span class="prayer-name">Fajr</span><span class="prayer-time">' + day.fajr + '</span></div>';
+    html += '<div class="prayer-row iqama-row iqama-red"><span class="prayer-name">Iqama</span><span class="prayer-time">' + iq.fajrIq + '</span></div>';
+
+    // Sunrise
+    html += '<div class="prayer-row"><span class="prayer-name">Sunrise</span><span class="prayer-time">' + day.sunrise + '</span></div>';
+
+    // Duha
+    html += '<div class="prayer-row"><span class="prayer-name">Duha</span><span class="prayer-time">' + day.duha + '</span></div>';
+
+    // Zuhr
+    html += '<div class="prayer-row"><span class="prayer-name">Zuhr</span><span class="prayer-time">' + day.zuhr + '</span></div>';
+    html += '<div class="prayer-row iqama-row"><span class="prayer-name">Iqama</span><span class="prayer-time">' + iq.zuhrIq + '</span></div>';
+
+    // Asr
+    html += '<div class="prayer-row"><span class="prayer-name">Asr</span><span class="prayer-time">' + day.asr + '</span></div>';
+    html += '<div class="prayer-row iqama-row"><span class="prayer-name">Iqama</span><span class="prayer-time">' + iq.asrIq + '</span></div>';
+
+    // Maghrib (highlighted blue)
+    html += '<div class="prayer-row highlighted-blue"><span class="prayer-name">Maghrib</span><span class="prayer-time">' + day.maghrib + '</span></div>';
+    html += '<div class="prayer-row iqama-row iqama-blue"><span class="prayer-name">Iqama</span><span class="prayer-time">' + iq.maghribIq + '</span></div>';
+
+    // Isha
+    html += '<div class="prayer-row"><span class="prayer-name">Isha</span><span class="prayer-time">' + day.isha + '</span></div>';
+    if (isRamadan(day)) {
+      html += '<div class="prayer-row iqama-row"><span class="prayer-name">Tarawih</span><span class="prayer-time">' + iq.ishaIq + '</span></div>';
+    } else {
+      html += '<div class="prayer-row iqama-row"><span class="prayer-name">Iqama</span><span class="prayer-time">' + iq.ishaIq + '</span></div>';
+    }
+
+    html += '</div>'; // prayer-list
+
+    // View calendar button
+    html += '<button class="view-toggle" id="show-calendar-btn">View Full Calendar</button>';
+
+    var container = document.getElementById('daily-content');
+    container.innerHTML = html;
+    container.classList.remove('fade-in');
+    void container.offsetWidth;
+    container.classList.add('fade-in');
+
+    // Bind calendar button
+    document.getElementById('show-calendar-btn').addEventListener('click', showCalendar);
+
+    // Restart countdown after re-render
+    if (typeof startCountdown === 'function') startCountdown();
+  }
+
+  /* ======== RENDER CALENDAR ======== */
+  function renderCalendar() {
+    var html = '<thead><tr>';
+    html += '<th>Day</th><th>Ramadan</th><th>Date</th>';
+    html += '<th>Fajr</th><th>Sunrise</th><th>Duha</th>';
+    html += '<th>Zuhr</th><th>Asr</th><th>Maghrib</th><th>Isha</th>';
+    html += '</tr></thead><tbody>';
+
+    for (var i = 0; i < days.length; i++) {
+      var d = days[i];
+      var rowClass = '';
+      if (d.dk === todayKey) rowClass += ' today-row';
+      if (d.tc) rowClass += ' time-change-row';
+
+      html += '<tr class="' + rowClass.trim() + '" data-index="' + i + '">';
+      html += '<td>' + d.dow + '</td>';
+      html += '<td>' + d.rd + '</td>';
+      html += '<td>' + d.dt + (d.tc ? ' *' : '') + '</td>';
+      html += '<td class="fajr-col">' + d.fajr + '</td>';
+      html += '<td>' + d.sunrise + '</td>';
+      html += '<td>' + d.duha + '</td>';
+      html += '<td>' + d.zuhr + '</td>';
+      html += '<td>' + d.asr + '</td>';
+      html += '<td class="maghrib-col">' + d.maghrib + '</td>';
+      html += '<td>' + d.isha + '</td>';
+      html += '</tr>';
+    }
+    html += '</tbody>';
+    document.getElementById('cal-table').innerHTML = html;
+
+    // Click row to go to daily view
+    var rows = document.querySelectorAll('#cal-table tbody tr');
+    rows.forEach(function(row) {
+      row.addEventListener('click', function() {
+        currentIndex = parseInt(this.getAttribute('data-index'));
+        showDaily();
+      });
+    });
+
+    // Scroll to today
+    setTimeout(function() {
+      var todayRow = document.querySelector('.today-row');
+      if (todayRow) {
+        todayRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 100);
+  }
+
+  /* ======== VIEW SWITCHING ======== */
+  function showCalendar() {
+    document.getElementById('daily-view').classList.add('hidden');
+    document.getElementById('calendar-view').classList.remove('hidden');
+    renderCalendar();
+  }
+
+  function showDaily() {
+    document.getElementById('calendar-view').classList.add('hidden');
+    document.getElementById('daily-view').classList.remove('hidden');
+    renderDaily();
+  }
+
+  /* ======== NAVIGATION ======== */
+  document.getElementById('prev-btn').addEventListener('click', function() {
+    currentIndex = (currentIndex - 1 + days.length) % days.length;
+    renderDaily();
+  });
+
+  document.getElementById('next-btn').addEventListener('click', function() {
+    currentIndex = (currentIndex + 1) % days.length;
+    renderDaily();
+  });
+
+  document.getElementById('back-to-daily').addEventListener('click', showDaily);
+  document.getElementById('back-to-daily-2').addEventListener('click', showDaily);
+
+  // Swipe support
+  var touchStartX = 0;
+  var touchEndX = 0;
+  var dailyView = document.getElementById('daily-view');
+
+  dailyView.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  dailyView.addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    var diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 60) {
+      if (diff > 0) {
+        currentIndex = (currentIndex + 1) % days.length;
+      } else {
+        currentIndex = (currentIndex - 1 + days.length) % days.length;
+      }
+      renderDaily();
+    }
+  }, { passive: true });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    if (document.getElementById('calendar-view').classList.contains('hidden')) {
+      if (e.key === 'ArrowLeft') {
+        currentIndex = (currentIndex - 1 + days.length) % days.length;
+        renderDaily();
+      } else if (e.key === 'ArrowRight') {
+        currentIndex = (currentIndex + 1) % days.length;
+        renderDaily();
+      }
+    }
+  });
+
+  /* ======== COUNTDOWN ======== */
+  var countdownInterval = null;
+
+  function updateCountdown() {
+    var el = document.getElementById('fast-countdown');
+    if (!el) return;
+
+    var day = days[currentIndex];
+    if (!isRamadan(day) || day.dk !== todayKey) {
+      el.style.display = 'none';
+      return;
+    }
+
+    var now = new Date();
+    var fajrDate = parseTimeToDate(day.fajr, day.dk);
+    var maghribDate = parseTimeToDate(day.maghrib, day.dk);
+
+    if (now >= fajrDate && now < maghribDate) {
+      var diff = maghribDate - now;
+      var totalMin = Math.floor(diff / 60000);
+      var hours = Math.floor(totalMin / 60);
+      var minutes = totalMin % 60;
+
+      var timeText = 'You have ';
+      if (hours > 0) {
+        timeText += hours + ' hour' + (hours !== 1 ? 's' : '') + ' and ' + minutes + ' minute' + (minutes !== 1 ? 's' : '');
+      } else {
+        timeText += minutes + ' minute' + (minutes !== 1 ? 's' : '');
+      }
+      timeText += ' until iftar.';
+
+      el.style.display = '';
+      el.innerHTML =
+        '<div class="countdown-label">Time Remaining in Fast</div>' +
+        '<div class="countdown-highlight"><span class="countdown-text">' + timeText + '</span></div>';
+    } else {
+      el.style.display = 'none';
+    }
+  }
+
+  function startCountdown() {
+    if (countdownInterval) clearInterval(countdownInterval);
+    updateCountdown();
+    countdownInterval = setInterval(updateCountdown, 60000);
+  }
+
+  /* ======== INIT ======== */
+  renderDaily();
+  startCountdown();
+
+})();
+</script>
+
+</body>
+</html>
