@@ -379,30 +379,6 @@
     .iqama-row .prayer-name { font-weight: 400; font-size: 0.78rem; }
     .iqama-row .prayer-time { font-weight: 500; font-size: 0.78rem; }
 
-    /* ---- FRIDAY KHUTBA ---- */
-    .khutba-section {
-      background: var(--pastel-yellow);
-      border: 1px solid var(--pastel-yellow-border);
-      border-radius: 10px;
-      padding: 14px 16px;
-      margin: 12px 0;
-    }
-
-    .khutba-section .section-label {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #8B7000;
-      margin-bottom: 6px;
-    }
-
-    .khutba-section .khutba-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 3px 0;
-      font-size: 0.85rem;
-    }
 
     /* ---- TIME CHANGE NOTICE ---- */
     .time-change-notice {
@@ -860,14 +836,6 @@
       html += '</div>';
     }
 
-    if (isFri && isRamadan(day)) {
-      html += '<div class="khutba-section">';
-      html += '<div class="section-label">Friday Khutba</div>';
-      html += '<div class="khutba-row"><span>First Khutba</span><span>1:05 PM</span></div>';
-      html += '<div class="khutba-row"><span>Second Khutba</span><span>2:05 PM</span></div>';
-      html += '</div>';
-    }
-
     html += '<div class="section-divider"><span>All Prayer Times</span></div>';
 
     html += '<div class="prayer-list">';
@@ -880,6 +848,11 @@
 
     html += '<div class="prayer-row"><span class="prayer-name">Zuhr</span><span class="prayer-time">' + day.zuhr + '</span></div>';
     html += '<div class="prayer-row iqama-row"><span class="prayer-name">Iqama</span><span class="prayer-time">' + iq.zuhrIq + '</span></div>';
+
+    if (isFri && isRamadan(day)) {
+      html += '<div class="prayer-row"><span class="prayer-name">1st Khutba</span><span class="prayer-time">1:05 PM</span></div>';
+      html += '<div class="prayer-row"><span class="prayer-name">2nd Khutba</span><span class="prayer-time">2:05 PM</span></div>';
+    }
 
     html += '<div class="prayer-row"><span class="prayer-name">Asr</span><span class="prayer-time">' + day.asr + '</span></div>';
     html += '<div class="prayer-row iqama-row"><span class="prayer-name">Iqama</span><span class="prayer-time">' + iq.asrIq + '</span></div>';
