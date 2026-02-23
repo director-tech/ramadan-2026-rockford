@@ -617,7 +617,8 @@
     <div class="ramadan-title">
       <h2>Ramadan 2026/1447</h2>
       <p>Prayer Timetable &mdash; February / March 2026</p>
-      <p class="community-line">For the Rockford Muslim community. Prayer times based on MAGR Masjid.</p>
+      <p class="community-line">For the Rockford Muslim community.</p>
+      <p class="community-line">Prayer times based on MAGR Masjid.</p>
     </div>
   </header>
 
@@ -938,13 +939,11 @@
 
   /* ======== NAVIGATION ======== */
   document.getElementById('prev-btn').addEventListener('click', function() {
-    currentIndex = (currentIndex - 1 + days.length) % days.length;
-    renderDaily();
+    if (currentIndex > 0) { currentIndex--; renderDaily(); }
   });
 
   document.getElementById('next-btn').addEventListener('click', function() {
-    currentIndex = (currentIndex + 1) % days.length;
-    renderDaily();
+    if (currentIndex < days.length - 1) { currentIndex++; renderDaily(); }
   });
 
   document.getElementById('back-to-daily').addEventListener('click', showDaily);
@@ -952,34 +951,37 @@
 
   // Swipe support
   var touchStartX = 0;
-  var touchEndX = 0;
+  var touchStartY = 0;
   var dailyView = document.getElementById('daily-view');
 
   dailyView.addEventListener('touchstart', function(e) {
     touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
   }, { passive: true });
 
   dailyView.addEventListener('touchend', function(e) {
-    touchEndX = e.changedTouches[0].screenX;
-    var diff = touchStartX - touchEndX;
-    if (Math.abs(diff) > 60) {
-      if (diff > 0) {
-        currentIndex = (currentIndex + 1) % days.length;
-      } else {
-        currentIndex = (currentIndex - 1 + days.length) % days.length;
+    var dx = touchStartX - e.changedTouches[0].screenX;
+    var dy = touchStartY - e.changedTouches[0].screenY;
+    // Only trigger if horizontal swipe is dominant and exceeds threshold
+    if (Math.abs(dx) > 100 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      if (dx > 0 && currentIndex < days.length - 1) {
+        currentIndex++;
+        renderDaily();
+      } else if (dx < 0 && currentIndex > 0) {
+        currentIndex--;
+        renderDaily();
       }
-      renderDaily();
     }
   }, { passive: true });
 
   // Keyboard navigation
   document.addEventListener('keydown', function(e) {
     if (document.getElementById('calendar-view').classList.contains('hidden')) {
-      if (e.key === 'ArrowLeft') {
-        currentIndex = (currentIndex - 1 + days.length) % days.length;
+      if (e.key === 'ArrowLeft' && currentIndex > 0) {
+        currentIndex--;
         renderDaily();
-      } else if (e.key === 'ArrowRight') {
-        currentIndex = (currentIndex + 1) % days.length;
+      } else if (e.key === 'ArrowRight' && currentIndex < days.length - 1) {
+        currentIndex++;
         renderDaily();
       }
     }
