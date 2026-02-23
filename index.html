@@ -788,7 +788,8 @@
     var maghribIq = (dk >= '2026-03-20') ? addMinutes(maghrib, 10) : addMinutes(maghrib, 20);
     var asrIq = (dk < '2026-02-28') ? '3:30 PM' : '5:15 PM';
     var ishaIq = (dk < '2026-03-08') ? '8:00 PM' : '9:00 PM';
-    return { fajrIq:fajrIq, zuhrIq:zuhrIq, asrIq:asrIq, maghribIq:maghribIq, ishaIq:ishaIq };
+    var tarawihIq = (dk < '2026-03-08') ? '8:15 PM' : '9:15 PM';
+    return { fajrIq:fajrIq, zuhrIq:zuhrIq, asrIq:asrIq, maghribIq:maghribIq, ishaIq:ishaIq, tarawihIq:tarawihIq };
   }
 
   function isRamadan(day) { return day.rd !== 'Shawwal 1'; }
@@ -841,7 +842,8 @@
       html += '<div class="card-label">Iftar / Maghrib Adhan</div>';
       html += '<div class="card-line">The fast ends at <span class="time-value">' + day.maghrib + '</span></div>';
       html += '<div class="card-line">Maghrib at the masjid is at <span class="time-value">' + iq.maghribIq + '</span></div>';
-      html += '<div class="tarawih-line">Tarawih is at <span class="time-value">' + iq.ishaIq + '</span></div>';
+      html += '<div class="tarawih-line">Isha Iqama is at <span class="time-value">' + iq.ishaIq + '</span></div>';
+      html += '<div class="tarawih-line">Tarawih is at <span class="time-value">' + iq.tarawihIq + '</span></div>';
       html += '</div>';
     }
 
@@ -880,10 +882,9 @@
     html += '<div class="prayer-row iqama-row iqama-blue"><span class="prayer-name">Iqama</span><span class="prayer-time">' + iq.maghribIq + '</span></div>';
 
     html += '<div class="prayer-row"><span class="prayer-name">Isha</span><span class="prayer-time">' + day.isha + '</span></div>';
+    html += '<div class="prayer-row iqama-row"><span class="prayer-name">Iqama</span><span class="prayer-time">' + iq.ishaIq + '</span></div>';
     if (isRamadan(day)) {
-      html += '<div class="prayer-row iqama-row"><span class="prayer-name">Tarawih</span><span class="prayer-time">' + iq.ishaIq + '</span></div>';
-    } else {
-      html += '<div class="prayer-row iqama-row"><span class="prayer-name">Iqama</span><span class="prayer-time">' + iq.ishaIq + '</span></div>';
+      html += '<div class="prayer-row iqama-row"><span class="prayer-name">Tarawih</span><span class="prayer-time">' + iq.tarawihIq + '</span></div>';
     }
 
     html += '</div>';
@@ -933,7 +934,7 @@
       html += '<div class="cal-cell"><span class="cal-cell-label">Zuhr</span><span class="cal-cell-time">' + d.zuhr + '</span><span class="iq-pill">Iq. ' + iq.zuhrIq + '</span></div>';
       html += '<div class="cal-cell"><span class="cal-cell-label">Asr</span><span class="cal-cell-time">' + d.asr + '</span><span class="iq-pill">Iq. ' + iq.asrIq + '</span></div>';
       html += '<div class="cal-cell maghrib-cell"><span class="cal-cell-label">Maghrib</span><span class="cal-cell-time">' + d.maghrib + '</span><span class="iq-pill">Iq. ' + iq.maghribIq + '</span></div>';
-      html += '<div class="cal-cell"><span class="cal-cell-label">Isha</span><span class="cal-cell-time">' + d.isha + '</span><span class="iq-pill">' + (isRamadan(d) ? 'Tarawih ' : 'Iq. ') + iq.ishaIq + '</span></div>';
+      html += '<div class="cal-cell"><span class="cal-cell-label">Isha</span><span class="cal-cell-time">' + d.isha + '</span><span class="iq-pill">Iq. ' + iq.ishaIq + '</span>' + (isRamadan(d) ? '<span class="iq-pill">Tarawih ' + iq.tarawihIq + '</span>' : '') + '</div>';
       html += '</div>';
 
       // Jumu'ah times
