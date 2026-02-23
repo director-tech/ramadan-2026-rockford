@@ -546,35 +546,6 @@
       border-color: var(--pastel-yellow-border);
     }
 
-    .cal-card-jumuah {
-      margin-top: 8px;
-      padding-top: 8px;
-      border-top: 1px solid var(--gray-200);
-      font-size: 0.72rem;
-      color: var(--gray-700);
-      text-align: center;
-    }
-
-    .today-card .cal-card-jumuah { border-top-color: var(--pastel-yellow-border); }
-
-    .cal-card-jumuah .jumuah-title {
-      font-size: 0.58rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--gray-500);
-      margin-bottom: 3px;
-    }
-
-    .cal-card-jumuah .jumuah-row {
-      display: inline;
-      font-size: 0.72rem;
-    }
-
-    .cal-card-jumuah .jumuah-row span:last-child {
-      font-weight: 700;
-      color: var(--black);
-    }
 
     /* ---- EID CARD ---- */
     .eid-card {
@@ -847,11 +818,11 @@
     html += '<div class="prayer-row"><span class="prayer-name">Duha</span><span class="prayer-time">' + day.duha + '</span></div>';
 
     html += '<div class="prayer-row"><span class="prayer-name">Zuhr</span><span class="prayer-time">' + day.zuhr + '</span></div>';
-    html += '<div class="prayer-row iqama-row"><span class="prayer-name">Iqama</span><span class="prayer-time">' + iq.zuhrIq + '</span></div>';
-
     if (isFri && isRamadan(day)) {
-      html += '<div class="prayer-row"><span class="prayer-name">1st Khutba</span><span class="prayer-time">1:05 PM</span></div>';
-      html += '<div class="prayer-row"><span class="prayer-name">2nd Khutba</span><span class="prayer-time">2:05 PM</span></div>';
+      html += '<div class="prayer-row iqama-row"><span class="prayer-name">1st Khutba</span><span class="prayer-time">1:05 PM</span></div>';
+      html += '<div class="prayer-row iqama-row"><span class="prayer-name">2nd Khutba</span><span class="prayer-time">2:05 PM</span></div>';
+    } else {
+      html += '<div class="prayer-row iqama-row"><span class="prayer-name">Iqama</span><span class="prayer-time">' + iq.zuhrIq + '</span></div>';
     }
 
     html += '<div class="prayer-row"><span class="prayer-name">Asr</span><span class="prayer-time">' + day.asr + '</span></div>';
@@ -910,21 +881,15 @@
       html += '<div class="cal-card-grid">';
       html += '<div class="cal-cell fajr-cell"><span class="cal-cell-label">Fajr</span><span class="cal-cell-time">' + d.fajr + '</span><span class="iq-pill">Iq. ' + iq.fajrIq + '</span></div>';
       html += '<div class="cal-cell"><span class="cal-cell-label">Sunrise</span><span class="cal-cell-time">' + d.sunrise + '</span></div>';
-      html += '<div class="cal-cell"><span class="cal-cell-label">Zuhr</span><span class="cal-cell-time">' + d.zuhr + '</span><span class="iq-pill">Iq. ' + iq.zuhrIq + '</span></div>';
+      if (isFri && isRamadan(d)) {
+        html += '<div class="cal-cell"><span class="cal-cell-label">Zuhr</span><span class="cal-cell-time">' + d.zuhr + '</span><div class="iq-pill-row"><span class="iq-pill">1st 1:05</span><span class="iq-pill">2nd 2:05</span></div></div>';
+      } else {
+        html += '<div class="cal-cell"><span class="cal-cell-label">Zuhr</span><span class="cal-cell-time">' + d.zuhr + '</span><span class="iq-pill">Iq. ' + iq.zuhrIq + '</span></div>';
+      }
       html += '<div class="cal-cell"><span class="cal-cell-label">Asr</span><span class="cal-cell-time">' + d.asr + '</span><span class="iq-pill">Iq. ' + iq.asrIq + '</span></div>';
       html += '<div class="cal-cell maghrib-cell"><span class="cal-cell-label">Maghrib</span><span class="cal-cell-time">' + d.maghrib + '</span><span class="iq-pill">Iq. ' + iq.maghribIq + '</span></div>';
       html += '<div class="cal-cell"><span class="cal-cell-label">Isha</span><span class="cal-cell-time">' + d.isha + '</span><div class="iq-pill-row"><span class="iq-pill">Iq. ' + iq.ishaIq + '</span>' + (isRamadan(d) ? '<span class="iq-pill">Tarawih ' + iq.tarawihIq + '</span>' : '') + '</div></div>';
       html += '</div>';
-
-      // Jumu'ah times
-      if (isFri && isRamadan(d)) {
-        html += '<div class="cal-card-jumuah">';
-        html += '<div class="jumuah-title">Jumu\'ah Khutba</div>';
-        html += '<span class="jumuah-row">1st Khutba <span>1:05 PM</span></span>';
-        html += ' &nbsp;&middot;&nbsp; ';
-        html += '<span class="jumuah-row">2nd Khutba <span>2:05 PM</span></span>';
-        html += '</div>';
-      }
 
       html += '</div>';
       html += '</div>'; // close wrapper
