@@ -105,29 +105,31 @@
     .sponsor-badge {
       display: inline-block;
       margin-bottom: 16px;
-      padding: 4px 12px 5px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 14px;
-      font-size: 0.52rem;
-      letter-spacing: 0.05em;
+      padding: 6px 16px 7px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      font-size: 0.68rem;
+      letter-spacing: 0.03em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.5);
     }
 
     .sponsor-badge strong {
-      font-weight: 600;
-      font-size: 0.56rem;
-      letter-spacing: 0.03em;
-      color: rgba(255,255,255,0.65);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.02em;
+      color: rgba(255,255,255,0.85);
     }
 
     .sponsor-names {
-      font-size: 0.48rem;
+      display: block;
+      margin-top: 2px;
+      font-size: 0.65rem;
       font-weight: 400;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.01em;
       text-transform: none;
-      color: rgba(255,255,255,0.35);
+      color: rgba(255,255,255,0.55);
     }
 
     .ramadan-title { margin-top: 4px; }
@@ -497,9 +499,7 @@
     .cal-card.today-card:hover { background: #FFF59D; }
 
     .cal-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
+      text-align: center;
       margin-bottom: 8px;
     }
 
@@ -511,9 +511,10 @@
     }
 
     .cal-card-date {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--gray-600);
       font-weight: 400;
+      margin-left: 6px;
     }
 
     .cal-card-grid {
@@ -549,42 +550,53 @@
     .cal-cell.maghrib-cell .cal-cell-label { color: var(--pastel-blue-text); }
     .cal-cell.maghrib-cell .cal-cell-time { color: var(--pastel-blue-text); font-weight: 700; }
 
-    .cal-card-iqama {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 4px 8px;
-      font-variant-numeric: tabular-nums;
-      margin-top: 6px;
-      padding-top: 6px;
-      border-top: 1px solid var(--gray-200);
-    }
-
-    .today-card .cal-card-iqama { border-top-color: var(--pastel-yellow-border); }
-
-    .cal-card-iqama .cal-cell .cal-cell-label {
-      font-size: 0.55rem;
-      color: var(--gray-500);
-    }
-
-    .cal-card-iqama .cal-cell .cal-cell-time {
-      font-size: 0.72rem;
-      font-weight: 500;
+    .iq-pill {
+      display: inline-block;
+      margin-top: 3px;
+      padding: 2px 7px;
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      font-size: 0.6rem;
+      font-weight: 600;
       color: var(--gray-700);
+      white-space: nowrap;
+    }
+
+    .today-card .iq-pill {
+      background: rgba(255,255,255,0.7);
+      border-color: var(--pastel-yellow-border);
     }
 
     .cal-card-jumuah {
-      margin-top: 6px;
-      padding: 6px 10px;
-      background: var(--pastel-yellow);
-      border: 1px solid var(--pastel-yellow-border);
-      border-radius: 6px;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--gray-200);
       font-size: 0.72rem;
-      display: flex;
-      justify-content: space-between;
-      color: #6B5800;
+      color: var(--gray-700);
+      text-align: center;
     }
 
-    .cal-card-jumuah strong { font-weight: 600; }
+    .today-card .cal-card-jumuah { border-top-color: var(--pastel-yellow-border); }
+
+    .cal-card-jumuah .jumuah-title {
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gray-500);
+      margin-bottom: 3px;
+    }
+
+    .cal-card-jumuah .jumuah-row {
+      display: inline;
+      font-size: 0.72rem;
+    }
+
+    .cal-card-jumuah .jumuah-row span:last-child {
+      font-weight: 700;
+      color: var(--black);
+    }
 
     /* ---- EID CARD ---- */
     .eid-card {
@@ -915,28 +927,24 @@
       html += '<span class="cal-card-date">' + (isEid ? 'Eid al-Fitr' : 'Ramadan ' + d.rd) + '</span>';
       html += '</div>';
 
-      // Adhan times
+      // Prayer times with iqama pills inline
       html += '<div class="cal-card-grid">';
-      html += '<div class="cal-cell fajr-cell"><span class="cal-cell-label">Fajr</span><span class="cal-cell-time">' + d.fajr + '</span></div>';
+      html += '<div class="cal-cell fajr-cell"><span class="cal-cell-label">Fajr</span><span class="cal-cell-time">' + d.fajr + '</span><span class="iq-pill">Iq. ' + iq.fajrIq + '</span></div>';
       html += '<div class="cal-cell"><span class="cal-cell-label">Sunrise</span><span class="cal-cell-time">' + d.sunrise + '</span></div>';
-      html += '<div class="cal-cell"><span class="cal-cell-label">Zuhr</span><span class="cal-cell-time">' + d.zuhr + '</span></div>';
-      html += '<div class="cal-cell"><span class="cal-cell-label">Asr</span><span class="cal-cell-time">' + d.asr + '</span></div>';
-      html += '<div class="cal-cell maghrib-cell"><span class="cal-cell-label">Maghrib</span><span class="cal-cell-time">' + d.maghrib + '</span></div>';
-      html += '<div class="cal-cell"><span class="cal-cell-label">Isha</span><span class="cal-cell-time">' + d.isha + '</span></div>';
-      html += '</div>';
-
-      // Iqama times
-      html += '<div class="cal-card-iqama">';
-      html += '<div class="cal-cell"><span class="cal-cell-label">Fajr Iq.</span><span class="cal-cell-time">' + iq.fajrIq + '</span></div>';
-      html += '<div class="cal-cell"><span class="cal-cell-label">Zuhr Iq.</span><span class="cal-cell-time">' + iq.zuhrIq + '</span></div>';
-      html += '<div class="cal-cell"><span class="cal-cell-label">Asr Iq.</span><span class="cal-cell-time">' + iq.asrIq + '</span></div>';
-      html += '<div class="cal-cell"><span class="cal-cell-label">Mghb Iq.</span><span class="cal-cell-time">' + iq.maghribIq + '</span></div>';
-      html += '<div class="cal-cell"><span class="cal-cell-label">' + (isRamadan(d) ? 'Tarawih' : 'Isha Iq.') + '</span><span class="cal-cell-time">' + iq.ishaIq + '</span></div>';
+      html += '<div class="cal-cell"><span class="cal-cell-label">Zuhr</span><span class="cal-cell-time">' + d.zuhr + '</span><span class="iq-pill">Iq. ' + iq.zuhrIq + '</span></div>';
+      html += '<div class="cal-cell"><span class="cal-cell-label">Asr</span><span class="cal-cell-time">' + d.asr + '</span><span class="iq-pill">Iq. ' + iq.asrIq + '</span></div>';
+      html += '<div class="cal-cell maghrib-cell"><span class="cal-cell-label">Maghrib</span><span class="cal-cell-time">' + d.maghrib + '</span><span class="iq-pill">Iq. ' + iq.maghribIq + '</span></div>';
+      html += '<div class="cal-cell"><span class="cal-cell-label">Isha</span><span class="cal-cell-time">' + d.isha + '</span><span class="iq-pill">' + (isRamadan(d) ? 'Tarawih ' : 'Iq. ') + iq.ishaIq + '</span></div>';
       html += '</div>';
 
       // Jumu'ah times
       if (isFri && isRamadan(d)) {
-        html += '<div class="cal-card-jumuah"><span><strong>Jumu\'ah:</strong> 1st Khutba 1:05 PM</span><span>2nd Khutba 2:05 PM</span></div>';
+        html += '<div class="cal-card-jumuah">';
+        html += '<div class="jumuah-title">Jumu\'ah Khutba</div>';
+        html += '<span class="jumuah-row">1st Khutba <span>1:05 PM</span></span>';
+        html += ' &nbsp;&middot;&nbsp; ';
+        html += '<span class="jumuah-row">2nd Khutba <span>2:05 PM</span></span>';
+        html += '</div>';
       }
 
       html += '</div>';
