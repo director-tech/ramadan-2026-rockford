@@ -6,7 +6,7 @@
   <title>MAGR Ramadan 2026/1447 Prayer Timetable</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* ---- LOCAL FONTS ---- */
     @font-face {
@@ -44,35 +44,6 @@
       font-style: normal;
       font-display: swap;
     }
-    @font-face {
-      font-family: 'Signifier';
-      src: url('fonts/Signifier-Regular.otf') format('opentype');
-      font-weight: 400;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Signifier';
-      src: url('fonts/Signifier-RegularItalic.otf') format('opentype');
-      font-weight: 400;
-      font-style: italic;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Signifier';
-      src: url('fonts/Signifier-Medium.otf') format('opentype');
-      font-weight: 500;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Signifier';
-      src: url('fonts/Signifier-Bold.otf') format('opentype');
-      font-weight: 600;
-      font-style: normal;
-      font-display: swap;
-    }
-
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
@@ -102,14 +73,16 @@
       background: var(--white);
       color: var(--black);
       line-height: 1.6;
+      letter-spacing: -0.02em;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
     }
 
     .title-font, h1, h2, h3 {
-      font-family: 'Signifier', 'Playfair Display', Georgia, 'Times New Roman', serif;
+      font-family: 'Matter', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
       font-weight: 600;
+      letter-spacing: -0.02em;
     }
 
     /* ---- HEADER ---- */
@@ -210,7 +183,7 @@
     }
 
     .date-display .ramadan-day-text {
-      font-family: 'Signifier', 'Playfair Display', serif;
+      font-family: 'Matter', 'Inter', sans-serif;
       font-size: 0.85rem;
       color: var(--deep-blue);
       font-weight: 500;
@@ -224,7 +197,7 @@
     }
 
     .day-heading {
-      font-family: 'Signifier', 'Playfair Display', serif;
+      font-family: 'Matter', 'Inter', sans-serif;
       font-size: 1.25rem;
       font-weight: 600;
       color: var(--deep-blue);
@@ -518,7 +491,7 @@
     }
 
     .cal-card-day {
-      font-family: 'Signifier', 'Playfair Display', serif;
+      font-family: 'Matter', 'Inter', sans-serif;
       font-weight: 600;
       font-size: 0.95rem;
       color: var(--deep-blue);
