@@ -798,11 +798,22 @@
     html += '<div class="prayer-row"><span class="prayer-name">Duha</span><span class="prayer-time">' + day.duha + '</span></div>';
 
     html += '<div class="prayer-row"><span class="prayer-name">Zuhr</span><span class="prayer-time">' + day.zuhr + '</span></div>';
-    if (isFri && isRamadan(day)) {
-      html += '<div class="prayer-row iqama-row"><span class="prayer-name">1st Khutba (Arabic)</span><span class="prayer-time">1:05 PM</span></div>';
-      html += '<div class="prayer-row iqama-row"><span class="prayer-name">Iqama</span><span class="prayer-time">1:20 PM</span></div>';
-      html += '<div class="prayer-row iqama-row"><span class="prayer-name">2nd Khutba (English)</span><span class="prayer-time">2:05 PM</span></div>';
-      html += '<div class="prayer-row iqama-row"><span class="prayer-name">Iqama</span><span class="prayer-time">2:30 PM</span></div>';
+    if (isFri && (isRamadan(day) || day.dk === '2026-03-20')) {
+      var k1Lang, k2Lang, k1Time, k1Iq, k2Time, k2Iq;
+      if (day.dk === '2026-02-27') {
+        k1Lang = 'Arabic'; k2Lang = 'English';
+        k1Time = '12:05 PM'; k1Iq = '12:20 PM'; k2Time = '1:05 PM'; k2Iq = '1:30 PM';
+      } else if (day.dk >= '2026-03-06') {
+        k1Lang = 'English'; k2Lang = 'Arabic';
+        k1Time = '1:05 PM'; k1Iq = '1:20 PM'; k2Time = '2:05 PM'; k2Iq = '2:30 PM';
+      } else {
+        k1Lang = 'Arabic'; k2Lang = 'English';
+        k1Time = '1:05 PM'; k1Iq = '1:20 PM'; k2Time = '2:05 PM'; k2Iq = '2:30 PM';
+      }
+      html += '<div class="prayer-row iqama-row"><span class="prayer-name">1st Khutba (' + k1Lang + ')</span><span class="prayer-time">' + k1Time + '</span></div>';
+      html += '<div class="prayer-row iqama-row"><span class="prayer-name">Iqama</span><span class="prayer-time">' + k1Iq + '</span></div>';
+      html += '<div class="prayer-row iqama-row"><span class="prayer-name">2nd Khutba (' + k2Lang + ')</span><span class="prayer-time">' + k2Time + '</span></div>';
+      html += '<div class="prayer-row iqama-row"><span class="prayer-name">Iqama</span><span class="prayer-time">' + k2Iq + '</span></div>';
     } else {
       html += '<div class="prayer-row iqama-row"><span class="prayer-name">Iqama</span><span class="prayer-time">' + iq.zuhrIq + '</span></div>';
     }
@@ -863,8 +874,14 @@
       html += '<div class="cal-card-grid">';
       html += '<div class="cal-cell fajr-cell"><span class="cal-cell-label">Fajr</span><span class="cal-cell-time">' + d.fajr + '</span><span class="iq-pill">Iq. ' + iq.fajrIq + '</span></div>';
       html += '<div class="cal-cell"><span class="cal-cell-label">Sunrise</span><span class="cal-cell-time">' + d.sunrise + '</span></div>';
-      if (isFri && isRamadan(d)) {
-        html += '<div class="cal-cell"><span class="cal-cell-label">Zuhr / Jumu\'ah</span><span class="cal-cell-time">' + d.zuhr + '</span><div class="iq-pill-row"><span class="iq-pill">1st 1:05</span><span class="iq-pill">Iq. 1:20</span></div><div class="iq-pill-row"><span class="iq-pill">2nd 2:05</span><span class="iq-pill">Iq. 2:30</span></div></div>';
+      if (isFri && (isRamadan(d) || d.dk === '2026-03-20')) {
+        var k1T, k1I, k2T, k2I;
+        if (d.dk === '2026-02-27') {
+          k1T = '12:05'; k1I = '12:20'; k2T = '1:05'; k2I = '1:30';
+        } else {
+          k1T = '1:05'; k1I = '1:20'; k2T = '2:05'; k2I = '2:30';
+        }
+        html += '<div class="cal-cell"><span class="cal-cell-label">Zuhr / Jumu\'ah</span><span class="cal-cell-time">' + d.zuhr + '</span><div class="iq-pill-row"><span class="iq-pill">1st ' + k1T + '</span><span class="iq-pill">Iq. ' + k1I + '</span></div><div class="iq-pill-row"><span class="iq-pill">2nd ' + k2T + '</span><span class="iq-pill">Iq. ' + k2I + '</span></div></div>';
       } else {
         html += '<div class="cal-cell"><span class="cal-cell-label">Zuhr</span><span class="cal-cell-time">' + d.zuhr + '</span><span class="iq-pill">Iq. ' + iq.zuhrIq + '</span></div>';
       }
